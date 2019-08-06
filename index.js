@@ -1,10 +1,10 @@
 module.exports = type => {
     switch (type) {
-        case 'ca':
+        case 'ca' || 'canada':
             return require('./canada/index');
             break;
         default:
-            return require('./canada/index');
+            return require('./common/index');
             break;
     }
 };
