@@ -13,7 +13,6 @@ class MortgageCalculator {
         this.nominal_interest_rate = nominal_interest_rate;  // in percentage
         this.nominal_amortization_period_years = nominal_amortization_period_years;
         this.monthly_interest_rate = nominal_interest_rate / 12 / 100;
-        // this.number_of_payments = nominal_amortization_period_years * 12;
     }
 
     get monthly_periodic_payment() {
@@ -25,6 +24,17 @@ class MortgageCalculator {
         return this.initial_principal * fraction;
     }
 
+    get show_all_periodic_payment() {
+        return {
+            monthly: this.periodic_payment('monthly'),
+            semiMonthly: this.periodic_payment('semi-monthly'),
+            acceleratedWeekly: this.periodic_payment('accelerated_weekly'),
+            acceleratedBiWeekly: this.periodic_payment('accelerated_bi-weekly'),
+            weekly: this.periodic_payment('weekly'),
+            biWeekly: this.periodic_payment('bi-weekly'),
+        }
+    }
+    
     periodic_interest_rate(period) {
         let result = (1 + (this.nominal_interest_rate / 100 / 2));  // divided by another 100 because need percentage in decimal
         result = Math.pow(result, 2);
@@ -90,17 +100,6 @@ class MortgageCalculator {
                 return this.monthly_periodic_payment * 12 / 52;
             case 'bi-weekly':  // 12 months => 26 payments if doing bi weekly since there are 52 weeks in a year
                 return this.monthly_periodic_payment * 12 / 26;
-        }
-    }
-
-    get show_all_periodic_payment() {
-        return {
-            monthly: this.periodic_payment('monthly'),
-            semiMonthly: this.periodic_payment('semi-monthly'),
-            acceleratedWeekly: this.periodic_payment('accelerated_weekly'),
-            acceleratedBiWeekly: this.periodic_payment('accelerated_bi-weekly'),
-            weekly: this.periodic_payment('weekly'),
-            biWeekly: this.periodic_payment('bi-weekly'),
         }
     }
 
