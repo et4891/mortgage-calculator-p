@@ -144,7 +144,8 @@ class MortgageCalculator {
             if(i !== 0){
                 balance = newBalance;
                 let interest = (this.periodic_interest_rate(period) * balance).toFixed(2);
-                console.log(interest, 'interestinterestinterest');
+                // console.log(interest, 'interestinterestinterest');
+                if(interest < 0) break;
                 let principal = (payment - interest).toFixed(2);
                 newBalance = (balance - principal).toFixed(2);
 
