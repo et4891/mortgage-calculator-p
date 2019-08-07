@@ -1,6 +1,6 @@
 {
   "name": "mortgage-calculator-p",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Canada has a slight different calculation",
   "main": "index.js",
   "scripts": {
