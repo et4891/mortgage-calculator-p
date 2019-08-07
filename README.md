@@ -8,7 +8,7 @@ $ npm i mortgage-calculator-p -S
 ```
 
 ## To Start
-```
+```javascript
 const MortgageCalculator = require('mortgage-calculator-p')('ca');  // ca means canada, if empty, it'll be the normal one because canada calculation is slightly different
 
 const principal = 250000;
@@ -19,7 +19,7 @@ const mc = new MortgageCalculator(principal, annual_rate, amortization_period);
 
 ## Show periodic payment
 continue with the above variable
-```
+```javascript
 // show only wanted
 // options: 'monthly', 'semi-monthly', 'accelerated_weekly', 'accelerated_bi-weekly', 'weekly', 'bi-weekly'
 mc.periodic_payment('monthly');
@@ -41,7 +41,7 @@ mc.show_all_periodic_payment;
 
 ## Show Amortization Table
 continue with the above variable
-```
+```javascript
 // show only wanted
 // options: 'monthly', 'semi-monthly', 'accelerated_weekly', 'accelerated_bi-weekly', 'weekly', 'bi-weekly'
 mc.amortization_table('monthly');
