@@ -1,3 +1,5 @@
+const { clDebug } = require('../utils/snippets');
+
 /*********************************************/
 /* http://www.yorku.ca/amarshal/mortgage.htm
  * found the calculation here for monthly, accelerated weekly
@@ -22,7 +24,7 @@ class MortgageCalculator {
         result = Math.pow(result, 12);
         result = result - 1;
         result *= 100;
-        // console.log(result.toFixed(2), 'effective_annual_rate');
+        // clDebug(result.toFixed(2), 'effective_annual_rate');
         return result;
     }
 
@@ -34,7 +36,7 @@ class MortgageCalculator {
         monthly_periodic_payment_denominators = 1 - monthly_periodic_payment_denominators;
 
         const result = monthly_periodic_payment_numerators / monthly_periodic_payment_denominators;
-        // console.log(result, 'monthly_periodic_payment');
+        // clDebug(result, 'monthly_periodic_payment');
         return result;
     }
 
@@ -107,7 +109,7 @@ class MortgageCalculator {
         }
 
         result = result - 1;
-        // console.log(result, 'periodic_interest_rate ' + period);
+        // clDebug(result, 'periodic_interest_rate ' + period);
         return result;
     }
     
@@ -144,7 +146,8 @@ class MortgageCalculator {
             if(i !== 0){
                 balance = newBalance;
                 let interest = (this.periodic_interest_rate(period) * balance).toFixed(2);
-                console.log(interest, 'interestinterestinterest');
+                // clDebug(interest, 'interestinterestinterest');
+                if(interest < 0) break;
                 let principal = (payment - interest).toFixed(2);
                 newBalance = (balance - principal).toFixed(2);
 
@@ -170,24 +173,24 @@ class MortgageCalculator {
 
             table.push(detail);
         }
-        // console.log(table, 'table');
+        // clDebug(table, 'table');
         return table;
     }
 }
 
 module.exports = MortgageCalculator;
 
-// console.log('-------------class below-----------------');
+// clDebug('-------------class below-----------------');
 // const mc = new MortgageCalculator(300000, 2.88, 30);
-// console.log(mc.periodic_payment('monthly'), 'periodic_payment  month');
-// console.log(mc.periodic_payment('semi-monthly'), 'periodic_payment semi-month');
-// console.log(mc.periodic_payment('accelerated_weekly'), 'periodic_payment accelerated_weekly');
-// console.log(mc.periodic_payment('accelerated_bi-weekly'), 'periodic_payment accelerated_bi-weekly');
-// console.log(mc.periodic_payment('weekly'), 'periodic_payment weekly');
-// console.log(mc.periodic_payment('bi-weekly'), 'periodic_payment bi-weekly');
+// clDebug(mc.periodic_payment('monthly'), 'periodic_payment  month');
+// clDebug(mc.periodic_payment('semi-monthly'), 'periodic_payment semi-month');
+// clDebug(mc.periodic_payment('accelerated_weekly'), 'periodic_payment accelerated_weekly');
+// clDebug(mc.periodic_payment('accelerated_bi-weekly'), 'periodic_payment accelerated_bi-weekly');
+// clDebug(mc.periodic_payment('weekly'), 'periodic_payment weekly');
+// clDebug(mc.periodic_payment('bi-weekly'), 'periodic_payment bi-weekly');
 //
-// console.log(mc.effective_annual_rate, 'effective_annual_rate');
-// console.log(mc.show_all_periodic_payment);
-// console.log(mc.amortization_table('weekly'));
-// console.log(mc.amortization_table('accelerated_weekly'));
-// console.log(mc.show_periodic_interest_rate);
+// clDebug(mc.effective_annual_rate, 'effective_annual_rate');
+// clDebug(mc.show_all_periodic_payment);
+// clDebug(mc.amortization_table('weekly'));
+// clDebug(mc.amortization_table('accelerated_weekly'));
+// clDebug(mc.show_periodic_interest_rate, 'show_periodic_interest_rate');

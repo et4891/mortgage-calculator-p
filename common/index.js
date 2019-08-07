@@ -1,3 +1,5 @@
+const { clDebug } = require('../utils/snippets');
+
 /*********************************************/
 /* https://m.wikihow.com/Calculate-Mortgage-Payments*/
 
@@ -65,7 +67,7 @@ class MortgageCalculator {
         }
 
         result = result - 1;
-        // console.log(result, 'periodic_interest_rate ' + period);
+        // clDebug(result, 'periodic_interest_rate ' + period);
         return result;
     }
 
@@ -119,7 +121,8 @@ class MortgageCalculator {
             if (i !== 0) {
                 balance = newBalance;
                 let interest = (this.periodic_interest_rate(period) * balance).toFixed(2);
-                // console.log(interest, 'interestinterestinterest');
+                // clDebug(interest, 'interestinterestinterest');
+                if(interest < 0) break;
                 let principal = (payment - interest).toFixed(2);
                 newBalance = (balance - principal).toFixed(2);
 
@@ -145,21 +148,21 @@ class MortgageCalculator {
 
             table.push(detail);
         }
-        // console.log(table, 'table');
+        // clDebug(table, 'table');
         return table;
     }
 }
 
 module.exports = MortgageCalculator;
 
-// console.log('-------------class below-----------------');
+// clDebug('-------------class below-----------------');
 // const mc = new MortgageCalculator(165000, 4.5, 30);
-// console.log(mc.periodic_payment('monthly'), 'periodic_payment  month');
-// console.log(mc.periodic_payment('semi-monthly'), 'periodic_payment semi-month');
-// console.log(mc.periodic_payment('accelerated_weekly'), 'periodic_payment accelerated_weekly');
-// console.log(mc.periodic_payment('accelerated_bi-weekly'), 'periodic_payment accelerated_bi-weekly');
-// console.log(mc.periodic_payment('weekly'), 'periodic_payment weekly');
-// console.log(mc.periodic_payment('bi-weekly'), 'periodic_payment bi-weekly');
+// clDebug(mc.periodic_payment('monthly'), 'periodic_payment  month');
+// clDebug(mc.periodic_payment('semi-monthly'), 'periodic_payment semi-month');
+// clDebug(mc.periodic_payment('accelerated_weekly'), 'periodic_payment accelerated_weekly');
+// clDebug(mc.periodic_payment('accelerated_bi-weekly'), 'periodic_payment accelerated_bi-weekly');
+// clDebug(mc.periodic_payment('weekly'), 'periodic_payment weekly');
+// clDebug(mc.periodic_payment('bi-weekly'), 'periodic_payment bi-weekly');
 
-// console.log(mc.amortization_table('monthly'));
-// console.log(mc.show_all_periodic_payment);
+// clDebug(mc.amortization_table('monthly'));
+// clDebug(mc.show_all_periodic_payment, 'show_all_periodic_payment');
