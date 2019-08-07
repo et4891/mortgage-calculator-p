@@ -15,8 +15,6 @@ class MortgageCalculator {
         this.nominal_amortization_period_years = nominal_amortization_period_years;
     }
 
-    // this only happens in canada's mortgage system
-    // normally calculation would not be so complicated
     periodic_interest_rate(period) {
         let result = (1 + (this.nominal_interest_rate / 100 / 2));  // divided by another 100 because need percentage in decimal
         result = Math.pow(result, 2);
@@ -25,14 +23,20 @@ class MortgageCalculator {
             case 'monthly':
                 result = Math.pow(result, (1 / 12));
                 break;
+            case 'semi-monthly':
+                result = Math.pow(result, (1 / 26));
+                break;
             case 'accelerated_weekly':
                 result = Math.pow(result, (7 / 365));
                 break;
             case 'accelerated_bi-weekly':
                 result = Math.pow(result, (14 / 365));
                 break;
+            case 'weekly':
+                result = Math.pow(result, (1 / 52));
+                break;
             case 'bi-weekly':
-                // result = Math.pow(result, (1 / 12)) / 26;
+                result = Math.pow(result, (1 / 26));
                 break;
             default:  // default is monthly
                 result = Math.pow(result, (1 / 12));
@@ -60,6 +64,8 @@ class MortgageCalculator {
         switch (period) {
             case 'monthly':
                 return this.nominal_amortization_period_years * 12;
+            case 'semi-monthly':
+                return this.nominal_amortization_period_years * 12 * 2;
             case 'accelerated_weekly':
                 return this.nominal_amortization_period_years * 12 * 4;
             case 'accelerated_bi-weekly':
@@ -84,10 +90,13 @@ class MortgageCalculator {
 
     get show_periodic_interest_rate() {
         const monthly = this.periodic_interest_rate('monthly');
+        const semiMonthly = this.periodic_interest_rate('semi-monthly');
         const accelerated_weekly = this.periodic_interest_rate('accelerated_weekly');
+        const accelerated_biWeekly = this.periodic_interest_rate('accelerated_bi-weekly');
+        const biWeekly = this.periodic_interest_rate('bi-weekly');
 
         const annual = monthly * 12;
-        return { monthly, accelerated_weekly, annual };
+        return { monthly, semiMonthly, accelerated_weekly, accelerated_biWeekly, biWeekly, annual };
     }
 
     periodic_payment(period){
@@ -121,6 +130,7 @@ class MortgageCalculator {
     amortization_table(period){
         const payment = this.periodic_payment(period).toFixed(2);
         const number_of_payments = this.number_of_payments(period);
+        // const number_of_payments = 20; // debugging usage since number of payments might be TOO much
         let balance = this.initial_principal;
         let newBalance = balance;
         let accumulatedInterest = 0;
@@ -133,6 +143,7 @@ class MortgageCalculator {
             if(i !== 0){
                 balance = newBalance;
                 let interest = (this.periodic_interest_rate(period) * balance).toFixed(2);
+                console.log(interest, 'interestinterestinterest');
                 let principal = (payment - interest).toFixed(2);
                 newBalance = (balance - principal).toFixed(2);
 
@@ -166,7 +177,7 @@ class MortgageCalculator {
 module.exports = MortgageCalculator;
 
 // console.log('-------------class below-----------------');
-// const mc = new MortgageCalculator(100000, 6, 25);
+// const mc = new MortgageCalculator(300000, 2.88, 30);
 // console.log(mc.periodic_payment('monthly'), 'periodic_payment  month');
 // console.log(mc.periodic_payment('semi-monthly'), 'periodic_payment semi-month');
 // console.log(mc.periodic_payment('accelerated_weekly'), 'periodic_payment accelerated_weekly');
@@ -176,5 +187,6 @@ module.exports = MortgageCalculator;
 //
 // console.log(mc.effective_annual_rate, 'effective_annual_rate');
 // console.log(mc.show_all_periodic_payment);
-// console.log(mc.amortization_table('monthly'));
+// console.log(mc.amortization_table('weekly'));
 // console.log(mc.amortization_table('accelerated_weekly'));
+// console.log(mc.show_periodic_interest_rate);
