@@ -120,7 +120,7 @@ class MortgageCalculator {
 
     amortization_table(period){
         const payment = this.periodic_payment(period).toFixed(2);
-        const number_of_payments = this.number_of_payments(period) - 290;
+        const number_of_payments = this.number_of_payments(period);
         let balance = this.initial_principal;
         let newBalance = balance;
         let accumulatedInterest = 0;
